@@ -6,7 +6,10 @@ import {
 	usePlaidLink,
 } from "react-plaid-link";
 import { useRouter } from "next/navigation";
-import { createLinkToken, exchangePublicToken } from "@/lib/actions/user.action";
+import {
+	createLinkToken,
+	exchangePublicToken,
+} from "@/lib/actions/user.action";
 
 const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
 	const [token, setToken] = useState("");
@@ -15,8 +18,10 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
 	useEffect(() => {
 		const getLinkToken = async () => {
 			const data = await createLinkToken(user);
-			setToken(data?.linkToken0);
+			setToken(data?.linkToken);
 		};
+
+		getLinkToken();
 	}, [user]);
 
 	const onSuccess = useCallback<PlaidLinkOnSuccess>(
@@ -24,7 +29,7 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
 			await exchangePublicToken({
 				publicToken: public_token,
 				user,
-			})
+			});
 
 			router.push("/");
 		},
@@ -42,8 +47,8 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
 		<>
 			{variant === "primary" ? (
 				<Button
-					disabled={!ready}
 					onClick={() => open()}
+					disabled={!ready}
 					className="plaidlink-primary">
 					Connect Bank
 				</Button>
