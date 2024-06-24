@@ -14,7 +14,7 @@ const TotalBalanceBox = ({
         <div className="flex flex-col gap-2">
           <p className="total-balance-label">Total Current Balance</p>
           <div className="total-balance-amount flex-center gap-2">
-            <AnimatedCounter amount={1250}/>
+            <AnimatedCounter amount={totalCurrentBalance}/>
           </div>
         </div>
       </div>
